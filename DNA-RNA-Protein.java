@@ -12,17 +12,16 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
-import org.biojava3.core.sequence.DNASequence;
-import org.biojava3.core.sequence.ProteinSequence;
 import org.biojava3.core.sequence.RNASequence;
 
 public class DNAtoProtein {
-	
+	  // List of characters being used
 	  private static final String CHAR_LIST = 
 		        "ATCG";
+	        // Maximum length of DNA generated in the RandomDNA.txt file
 		    private static final int RANDOM_STRING_LENGTH = 103;
 		    
-		    
+		    // Randomly generate either a '+' or a '-' to determine transcription direction
 		    public String randomSymbol(){
 		    	ArrayList<String> symbols = new ArrayList<String>();
 		    	symbols.add("+");
@@ -32,7 +31,7 @@ public class DNAtoProtein {
 		    }
 		     
 		    /**
-		     * This method generates random string
+		     * This method generates random DNA strand
 		     * @return
 		     */
 		    public String generateRandomString(){
@@ -61,6 +60,7 @@ public class DNAtoProtein {
 		        }
 		    }
 		    
+		    // This method generates the corresponding RNA strand depending on the String value passed in the constructor
 		    public String generatemRNA(String dna){
 	    		StringBuilder sb = new StringBuilder();
 		    	if(dna.endsWith("+")){
@@ -109,7 +109,7 @@ public class DNAtoProtein {
 		    	}
 		    	return sb.toString();
 		    }
-		    
+		    // This method splits the string every n times. Used for getting codons.
 		    public String[] splitStringEvery(String s, int interval) {
 		        int arrayLength = (int) Math.ceil(((s.length() / (double)interval)));
 		        String[] result = new String[arrayLength];
@@ -181,36 +181,37 @@ public class DNAtoProtein {
 		JOptionPane.showMessageDialog(null, "Click ok to begin");
 		
 		DNAtoProtein main = new DNAtoProtein();
-        String path = "C:"+File.separator+"DNAtoProtein"+File.separator+"input1.txt";
+        String path = "C:"+File.separator+"DNAtoProtein"+File.separator+"RandomDNA.txt";
         final File inputfile = new File(path);
-        
+        // creating the file
         inputfile.createNewFile();
         
+        // writing the randomly generated DNA strands to the RandomDNA.txt file
         FileWriter writer = new FileWriter(inputfile.getAbsoluteFile());
         BufferedWriter bw = new BufferedWriter(writer);
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(", "+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(",	"+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(", "+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(", "+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(", "+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(", "+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(", "+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
-        bw.write(" "+main.randomSymbol());
+        bw.write(", "+main.randomSymbol());
         bw.newLine();
         bw.write(main.generateRandomString());
         bw.write(" "+main.randomSymbol());
@@ -219,17 +220,21 @@ public class DNAtoProtein {
         bw.write(" "+main.randomSymbol());
         bw.close();
         
+        
+        // Successful Operation
         JOptionPane.showMessageDialog(null, "Random DNA strands generated successfully. Click Ok to continue.");
         JOptionPane.showMessageDialog(null, "Click OK to begin generating the corresponding mRNA strands");
-        String outpath = "C:"+File.separator+"DNAtoProtein"+File.separator+"mRNA.txt";
+       // Creating the path for the mRNA.txt file
+       String outpath = "C:"+File.separator+"DNAtoProtein"+File.separator+"mRNA.txt";
 
        
        File output = new File(outpath);
+       // creating the mRNA.txt file
        output.createNewFile();
        
+       // Writing the mRNA strands into the mRNA.txt file
        FileWriter fw = new FileWriter(output.getAbsoluteFile());
-       BufferedWriter rna = new BufferedWriter(fw);
-       
+       BufferedWriter rna = new BufferedWriter(fw); 
        rna.write(main.generatemRNA(FileUtils.readLines(inputfile).get(0)));
        rna.newLine();
        rna.write(main.generatemRNA(FileUtils.readLines(inputfile).get(1)));
@@ -251,18 +256,25 @@ public class DNAtoProtein {
        rna.write(main.generatemRNA(FileUtils.readLines(inputfile).get(9)));
        rna.close();
        
+       // Successful Operation
        JOptionPane.showMessageDialog(null, "DNA transcribed successfully!");
        JOptionPane.showMessageDialog(null, "Click OK to begin mRNA translation to proteins");
-       
+       // Creating the path for the ProteinSequence.txt file
        String proteinpath = "C:"+File.separator+"DNAtoProtein"+File.separator+"ProteinSequence.txt";
        
        File proteins = new File(proteinpath);
+       // Creating the ProteinSequence.txt file
        proteins.createNewFile();
        
+       // And, finally, writing the protein sequences on the ProteinSequence.txt file
        FileWriter lefw = new FileWriter(proteins.getAbsoluteFile());
-       BufferedWriter proteinwriter = new BufferedWriter(lefw);
-       
+       BufferedWriter proteinwriter = new BufferedWriter(lefw); 
        proteinwriter.write("***NOTE*** A '*' represents a STOP codon!");
+       proteinwriter.newLine();
+       proteinwriter.write("It's open source! Created a github repository. Link: https://github.com/MoeMixMC/DNA-to-Protein-Sequencer");
+       proteinwriter.newLine();
+       proteinwriter.write("Protein Sequences:");
+       proteinwriter.newLine();
        proteinwriter.write(main.generateProteinSequence(FileUtils.readLines(output).get(0)));
        proteinwriter.newLine();
        proteinwriter.write(main.generateProteinSequence(FileUtils.readLines(output).get(1)));
@@ -284,8 +296,8 @@ public class DNAtoProtein {
        proteinwriter.write(main.generateProteinSequence(FileUtils.readLines(output).get(9)));
        proteinwriter.close();
        
+       // Last successful operation notification :)
        JOptionPane.showMessageDialog(null, "Protein Sequences generated succesfully!");
-       JOptionPane.showMessageDialog(null, "NOTE: A '*' represents a STOP codon.");
 	}
 
 }
