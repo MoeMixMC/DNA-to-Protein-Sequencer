@@ -1,7 +1,10 @@
 DNA-Sequencer
 ========================
 
-This program will effectively sequence a randomly generated DNA strand in the input1.txt file.
+This program will effectively sequence a randomly generated DNA strand in the RandomDNA.txt file. DNA strands are generated randomly. Once generated, the DNA strands will be transcribed into RNA and the RNA strands will be stored in the mRNA.txt file. Once mRNA is generated, the final protein sequence will be generated in the ProteinSequence.txt file.
+
+
+
 
 Procedure:
 1.) Create a local directory named "DNAtoProtein" in you C: drive. (I will implement a configurable directory soon)
